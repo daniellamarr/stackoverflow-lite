@@ -1,4 +1,5 @@
 import questions from '../structures/questionStructure';
+import answers from '../structures/answerStructure';
 
 class Controller {
     getAllQuestions = (req, res) => {
@@ -14,7 +15,7 @@ class Controller {
             res.status(400).send('Please add the title for your question');
             return;
         }
-        if (!req.body.body || req.body.title.body < 3) {
+        if (!req.body.body || req.body.body.length < 3) {
             res.status(400).send('Please add content to your question');
             return;
         }
