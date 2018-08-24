@@ -4,29 +4,50 @@
     font-family: 'Cuprum',sans-serif;
 }
 
-body {
-    /* background-color: #eee; */
-}
-
 a {
     color: rgb(0, 140, 255);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+a, input, textarea {
+    outline: none;
+}
+
+.red {
+    background-color: rgb(206, 18, 18) !important;
+}
+
+.green {
+    background-color: rgb(11, 197, 11) !important;
+}
+
+.yellow {
+    background-color: rgb(209, 209, 0) !important;
+}
+
+.clear {
+    clear: both;
+}
+
+.show-xs {
+    display: none !important;
+}
+
+.hide {
+    /* visibility: hidden; */
+    display: none;
 }
 
 button {
-    background-color: #fff;
-    color: rgb(0, 140, 255);
+    background-color: rgb(0, 140, 255);
+    color: #fff;
     padding: 15px;
     border: none;
     cursor: pointer;
     transition: 0.5s all;
     font-weight: bold;
-}
-
-button:hover {
-    background-color: rgb(0, 140, 255);
-    color: #fff;
+    border: 1px solid rgb(0, 140, 255);
 }
 
 header {
@@ -84,6 +105,22 @@ nav ul li {
     font-size: 30px;
 }
 
+#home-questions .title {
+    font-size: 30px;
+    color: #aaa;
+}
+
+#home-questions button {
+    background-color: rgb(0, 140, 255);
+    color: #fff;
+}
+
+#home-questions hr {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border: 1px dotted #aaa;
+}
+
 #loginBody {
     background-image: url(../img/1.jpeg);
     background-size: cover;
@@ -103,11 +140,16 @@ nav ul li {
     color: #aaa;
 }
 
+.log {
+    margin-top: 100px;
+}
+
 #login input {
     display: block;
     width: 100%;
     margin-bottom: 30px;
     padding: 10px;
+    padding-right: 0;
     border-radius: 3px;
     border: none;
 }
@@ -183,9 +225,9 @@ aside a {
 }
 
 .question-text {
-    /* width: 60%; */
     line-height: 25px;
     letter-spacing: 0.3px;
+    color: rgb(167, 42, 42);
 }
 
 .text-right {
@@ -193,13 +235,10 @@ aside a {
     color: #aaa;
 }
 
-.answer-section {
-    /* width: 60%; */
-}
-
 .answers {
     line-height: 25px;
     letter-spacing: 0.3px;
+    color: #302f2f;
 }
 
 .answer-title {
@@ -214,11 +253,14 @@ aside a {
 }
 
 .answer-section textarea {
-    width: 95%;
+    width: 90%;
     resize: none;
     font-size: 18px;
     padding: 10px;
     margin-bottom: 10px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    border: 1px solid rgb(0, 140, 255);
 }
 
 .answer-section button {
@@ -227,9 +269,10 @@ aside a {
 }
 
 #right-sidebar {
-    /* border-left: 1px dotted #aaa; */
-    width: 30%;
-    float: right;
+    position: absolute;
+    /* width: 30%; */
+    top: 10%;
+    right: 20%;
     height: 500px;
     padding-left: 20px;
 }
@@ -249,5 +292,209 @@ aside a {
 }
 
 .sidebar-list ul li a {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.ask input, .ask textarea {
+    display: block;
+    margin-bottom: 10px;
+    width: 90%;
+    padding: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 15px;
+    resize: none;
+    border-radius: 2px;
+    border: 1px solid rgb(0, 140, 255);
+}
+
+.dropdown {
+    background-color: #fff;
+    position: absolute;
+    width: auto;
+    height: auto;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+    z-index: 12;
+    padding: 10px;
+    right: 60px;
+}
+
+.dropdown ul li {
+    display: block;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.search {
+    width: 200px;
+    padding: 5px;
+}
+
+#home-questions {
+    width: 65%;
+}
+
+.h-questions {
+    padding: 10px;
+    line-height: 30px;
+    border-bottom: 3px dotted #aaa;
+    margin-bottom: 10px;
+}
+
+.tags ul li {
+    display: inline;
+    padding-right: 10px;
+}
+
+.tags ul li a {
+    background-color: rgb(0, 140, 255);
+    color: #fff;
+    font-size: 12px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.review ul li {
+    display: inline;
+    padding-right: 10px;
+}
+
+.review ul li span.text {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.review ul li span.count {
+    background-color: rgb(0, 140, 255);
+    color: #fff;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#background-profile {
+    width: 100%;
+    height: 300px;
+    background-image: url('../img/1.jpeg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.8);
+    background-attachment: fixed;
+    color: #fff;
+}
+
+.profile-photo {
+    position: absolute;
+    background-image: url('../img/no-profile.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    top: 250px;
+    left: 50px;
+}
+
+.revs {
+    position: absolute;
+    top: 240px;
+    right: 30px;
+}
+
+footer {
+    background-color: rgb(0, 140, 255);
+    padding: 30px;
+    color: #fff;
+    text-align: center;
+    z-index: 20;
+}
+
+footer a {
+    color: #eee;
+}
+
+@media (max-width: 900px) {
+    .hide-xs {
+        display: none;
+    }
+
+    .show-xs {
+        display: inherit !important;
+    }
+
+    header {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .logo {
+        margin-left: 10px;
+    }
+
+    nav ul li:last-child {
+        padding-right: 10px;
+    }
+
+    #home {
+        height: 350px;
+    }
+
+    #main-page {
+        margin-left: 0;
+    }
+
+    #questions, #home-questions {
+        width: 100%;
+    }
+
+    #right-sidebar {
+        width: 100%;
+        position: relative;
+        right: 0;
+        top: 0;
+    }
+
+    .h-questions .text-right {
+        float: none;
+    }
+
+    #loginBody {
+        background-color: #000;
+        background-image: none !important;
+    }
+
+    #askBody #right-sidebar, #profileBody #right-sidebar {
+        display: none;
+    }
+
+    .revs {
+        top: 80px;
+        right: 0;
+    }
+
+    footer {
+        font-size: 14px;
+    }
+    
+}
+
+@media (max-width: 500px) {
+    .login {
+        width: 300px;
+    }
+
+    .login p, .login a {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 350px) {
+    .login {
+        width: 200px;
+    }
 }
