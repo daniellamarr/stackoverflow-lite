@@ -7,7 +7,7 @@ use(chaiHttp);
 
 let test_questions = {
     'title':'What is a noun ?',
-    'body':'Elaborating'
+    'body':'Elaborating '
 }
 
 let test_answers = {
