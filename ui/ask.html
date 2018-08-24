@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Project Stackoverflow Lite - Sign Up</title>
+    <title>Project Stackoverflow Lite - Ask a Question</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito|Cuprum" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Cuprum|Poiret+One" rel="stylesheet">
     <link rel="stylesheet" href="css/themify-icons.css">
 </head>
-<body id="loginBody">
+<body id="askBody">
     <section id="container">
-        <div class="dashboard-header"></div>
+            <div class="dashboard-header"></div>
         <header>
             <div class="logo">
                 <a href="index.html"><h3>Stackoverflow Lite</h3></a>
@@ -20,6 +20,7 @@
                 <ul>
                     <li class="hide-xs"><a href="profile.html">Profile</a></li>
                     <li class="hide-xs"><a href="login.html">Login</a></li>
+                    <li class="hide-xs"><a href="signup.html">Create an account</a></li>
                     <li>
                         <a href="javascript:;" id="welcome" class="has-dropdown">
                             <i class="ti ti-menu"></i>
@@ -31,6 +32,7 @@
                                 <li><a href="questions.html">Go to questions</a></li>
                                 <li class="show-xs"><a href="profile.html">Profile</a></li>
                                 <li class="show-xs"><a href="login.html">Login</a></li>
+                                <li class="show-xs"><a href="signup.html">Create an account</a></li>
                             </ul>
                         </div>
                     </li>
@@ -47,22 +49,46 @@
                 </ul>
             </nav>
         </header>
-        <section id="login">
-            <center>
-                <div class="login">
-                    <h4>Join Stackoverflow and connect with great minds</h4><br>
-                    <form action="login.html">
-                        <input type="text" placeholder="Name" required>
-                        <input type="email" placeholder="Email" required>
-                        <input type="text" placeholder="Preferred Username" required>
-                        <input type="password" placeholder="Password" required>
-                        <input type="password" placeholder="Confirm Password" required>
-                        <p>Already have an account ? <a href="login.html">Sign in</a></p><br>
-                        <button>Proceed</button>
+        <section id="main-page">
+            <section id="questions">
+                <div class="ask">
+                    <h1>Ask a Question</h1>
+                    <form action="questions.html" method="post">
+                        <input type="text" placeholder="Title">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="Enter your Question"></textarea>
+                        <input type="text" name="" id="" placeholder="Add tags: Seperate multiple tags with commas. E.g HTML, CSS">
+                        <button>Post</button>
                     </form>
                 </div>
-            </center>
+            </section>
         </section>
+        <section id="right-sidebar">
+            <h1>Top Questions</h1>
+            <div class="sidebar-list">
+                <ul>
+                    <li><a href="">What is a HTML ?</a></li>
+                    <li><a href="">What is a CSS ?</a></li>
+                    <li><a href="">What is a JS ?</a></li>
+                    <li><a href="">What is a PHP ?</a></li>
+                    <li><a href="">What is a NodeJS ?</a></li>
+                    <li><a href="">What is a Python ?</a></li>
+                </ul>
+            </div>
+            <h1>Recent Questions</h1>
+            <div class="sidebar-list">
+                <ul>
+                    <li><a href="">What is a HTML ?</a></li>
+                    <li><a href="">What is a CSS ?</a></li>
+                    <li><a href="">What is a JS ?</a></li>
+                    <li><a href="">What is a PHP ?</a></li>
+                    <li><a href="">What is a NodeJS ?</a></li>
+                    <li><a href="">What is a Python ?</a></li>
+                </ul>
+            </div>
+        </section>
+        <footer>
+            <p>&copy; Stack Overflow - Lite | Developed by <a href="">Daniel Lamarr</a></p>
+        </footer>
     </section>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

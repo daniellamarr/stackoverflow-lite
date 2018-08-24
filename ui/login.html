@@ -3,32 +3,57 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Project Stackoverflow Lite</title>
+    <title>Project Stackoverflow Lite - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link href="https://fonts.googleapis.com/css?family=Nunito|Cuprum" rel="stylesheet">
-    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/themify-icons.css">
 </head>
 <body id="loginBody">
     <section id="container">
+        <div class="dashboard-header"></div>
         <header>
             <div class="logo">
-                <h3>Stackoverflow Lite</h3>
+                <a href="index.html"><h3>Stackoverflow Lite</h3></a>
             </div>
             <nav>
                 <ul>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="signup.html">Create an account</a></li>
+                    <li class="hide-xs"><a href="profile.html">Profile</a></li>
+                    <li class="hide-xs"><a href="signup.html">Create an account</a></li>
+                    <li>
+                        <a href="javascript:;" id="welcome" class="has-dropdown">
+                            <i class="ti ti-menu"></i>
+                            <i class="ti ti-close hide"></i>
+                        </a>
+                        <div class="dropdown hide">
+                            <ul>
+                                <li><a href="ask.html">Ask a Question</a></li>
+                                <li><a href="questions.html">Go to questions</a></li>
+                                <li class="show-xs"><a href="profile.html">Profile</a></li>
+                                <li class="show-xs"><a href="signup.html">Create an account</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="search-d"><i class="ti ti-search"></i></a>
+                        <div class="dropdown hide">
+                            <ul>
+                                <li>
+                                    <input type="search" class="search" placeholder="Search...">
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </header>
         <section id="login">
             <center>
-                <div class="login">
+                <div class="login log">
                     <h4>Sign in to stackoverflow lite</h4><br>
-                    <form action="">
-                        <input type="text" placeholder="Email or Username">
-                        <input type="password" placeholder="Password">
+                    <form action="profile.html">
+                        <input type="text" placeholder="Email or Username" required>
+                        <input type="password" placeholder="Password" required>
                         <p>Don't have an account ? <a href="signup.html">Create an account</a></p><br>
                         <button>Sign in</button>
                     </form>
@@ -36,5 +61,8 @@
             </center>
         </section>
     </section>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
