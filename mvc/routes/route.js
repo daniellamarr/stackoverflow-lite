@@ -8,6 +8,8 @@ const Route = (app) => {
 
     app.post('/api/v1/questions', Controller.askQuestion)
 
+    app.post('/api/v1/questions/:id/answers', Controller.postAnswer)
+
 }
 
 export default Route;
