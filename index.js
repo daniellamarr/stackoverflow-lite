@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import Route from './mvc/routes/route';
-import db from './db/index';
+import Route from './mvc/routes/jwtroute';
 
 const app = express();
 
