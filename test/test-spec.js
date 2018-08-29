@@ -57,11 +57,24 @@ describe('/GET /api/v1/questions/:id', () => {
     });
 });
 
+let token;
 describe('/POST /api/v1/questions', () => {
+    before((done) => {
+        request(server)
+        .post('/api/v1/auth/login')
+        .send(test_login)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            token = res.body.token;
+            done();
+        });
+    });
+
     it('it should post a question', (done) => {
     request(server)
         .post('/api/v1/questions')
-        .set('x-access-token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM1NTY3NzY2LCJleHAiOjE1MzU2NTQxNjZ9.A13BBua1DU4isAHsTsj-4rMln1QqO8UjQCj8kZWIewc')
+        .set('x-access-token',token)
         .send(test_questions)
         .end((err, res) => {
             res.should.have.status(200);
@@ -72,10 +85,21 @@ describe('/POST /api/v1/questions', () => {
 });
 
 describe('/POST /api/v1/questions/:id/answers', () => {
+    before((done) => {
+        request(server)
+        .post('/api/v1/auth/login')
+        .send(test_login)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            token = res.body.token;
+            done();
+        });
+    });
     it('it should post an answer', (done) => {
     request(server)
         .post('/api/v1/questions/' + 1 + '/answers')
-        .set('x-access-token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM1NTY3NzY2LCJleHAiOjE1MzU2NTQxNjZ9.A13BBua1DU4isAHsTsj-4rMln1QqO8UjQCj8kZWIewc')
+        .set('x-access-token',token)
         .send(test_answers)
         .end((err, res) => {
             res.should.have.status(200);
