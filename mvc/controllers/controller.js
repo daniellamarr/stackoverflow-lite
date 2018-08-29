@@ -1,5 +1,6 @@
 import questions from '../structures/questionStructure';
 import answers from '../structures/answerStructure';
+import users from '../structures/users';
 
 class Controller {
     getAllQuestions = (req, res) => {
@@ -41,6 +42,42 @@ class Controller {
         };
         answers.push(answer);
         res.send(answer);
+    }
+    userSignup = (req,res) => {
+        if (!req.body.userfullname || req.body.userfullname.length < 3) {
+            res.status(400).send('Please enter your full name');
+            return;
+        }
+        if (!req.body.useremail || req.body.useremail.length < 3) {
+            res.status(400).send('Please provide your email address');
+            return;
+        }
+        if (!req.body.userpassword || req.body.userpassword.length < 3) {
+            res.status(400).send('Please provide your password');
+            return;
+        }
+    
+        const user = {
+            id: users.length + 1,
+            userfullname: req.body.userfullname,
+            useremail: req.body.useremail,
+            userpassword: req.body.userpassword
+        };
+        users.push(user);
+        res.send(user);
+    }
+    userLogin = (req,res) => {
+        const user = users.find(c => c.useremail === req.body.useremail);
+        if (!user) {
+            res.status(404).send('This user does not exist');
+        }else{
+            const pass = users.find(d => d.userpassword === req.body.userpassword);
+            if (!pass) {
+                res.status(404).send('The password you entered is wrong');
+            }else{
+                res.send(user);
+            }
+        }
     }
 }
 
