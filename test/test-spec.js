@@ -14,6 +14,21 @@ let test_answers = {
     'reply':'A noun is a name of any person animal place or thing'
 }
 
+let test_user = {
+    'userfullname':'Justin Nebo',
+    'useremail':'jnebo@andela.com',
+    'userpassword':'qwerty'
+}
+
+let test_login = {
+    'useremail':'jnebo@andela.com',
+    'userpassword':'qwerty'
+}
+
+let test_login_error = {
+    'useremail':'dan@andela.com',
+    'userpassword':'qwerty'
+}
 /*
 * Test the /GET route
 */
@@ -62,6 +77,45 @@ describe('/POST /api/v1/questions/:id/answers', () => {
         .send(test_answers)
         .end((err, res) => {
             res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
+describe('/POST /api/v1/auth/signup', () => {
+    it('it should add a new user', (done) => {
+    request(server)
+        .post('/api/v1/auth/signup')
+        .send(test_user)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
+describe('/POST /api/v1/auth/login', () => {
+    it('it should login a new user', (done) => {
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(test_login)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
+describe('/POST /api/v1/auth/login', () => {
+    it('it should throw a 404 error if user does not exist', (done) => {
+    request(server)
+        .post('/api/v1/auth/login')
+        .send(test_login_error)
+        .end((err, res) => {
+            res.should.have.status(404);
             res.body.should.be.a('object');
             done();
         });
