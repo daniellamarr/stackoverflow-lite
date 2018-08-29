@@ -67,7 +67,17 @@ class Controller {
         res.send(user);
     }
     userLogin = (req,res) => {
-        
+        const user = users.find(c => c.useremail === req.body.useremail);
+        if (!user) {
+            res.status(404).send('This user does not exist');
+        }else{
+            const pass = users.find(d => d.userpassword === req.body.userpassword);
+            if (!pass) {
+                res.status(404).send('The password you entered is wrong');
+            }else{
+                res.send(user);
+            }
+        }
     }
 }
 

@@ -12,6 +12,8 @@ const Route = (app) => {
 
     app.post('/api/v1/auth/signup', Controller.userSignup);
 
+    app.post('/api/v1/auth/login', Controller.userLogin);
+
 }
 
 export default Route;
