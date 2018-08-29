@@ -21,7 +21,7 @@ class Controller {
     getOneQuestion = (req, resp) => {
         db.connect((err, client, done) => {
             if (err) throw err
-            client.query('SELECT * FROM questions WHERE questionsid = $1', [req.params.id], (err, res) => {
+            client.query('SELECT * FROM questions WHERE questionid = $1', [req.params.id], (err, res) => {
                 done()
             
                 if (err) {
