@@ -57,6 +57,34 @@ describe('/GET /api/v1/questions/:id', () => {
     });
 });
 
+describe('/POST /api/v1/questions', () => {
+    it('it should post a question', (done) => {
+    request(server)
+        .post('/api/v1/questions')
+        .set('x-access-token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM1NTY3NzY2LCJleHAiOjE1MzU2NTQxNjZ9.A13BBua1DU4isAHsTsj-4rMln1QqO8UjQCj8kZWIewc')
+        .send(test_questions)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
+describe('/POST /api/v1/questions/:id/answers', () => {
+    it('it should post an answer', (done) => {
+    request(server)
+        .post('/api/v1/questions/' + 1 + '/answers')
+        .set('x-access-token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTM1NTY3NzY2LCJleHAiOjE1MzU2NTQxNjZ9.A13BBua1DU4isAHsTsj-4rMln1QqO8UjQCj8kZWIewc')
+        .send(test_answers)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+        });
+    });
+});
+
 describe('/POST /api/v1/auth/signup', () => {
     it('it should add a new user', (done) => {
     request(server)
