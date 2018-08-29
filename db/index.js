@@ -1,13 +1,6 @@
 import { Pool, Client } from "pg";
+import config from "./config";
 
+const db = new Pool(config);
 
-
-const dbConfig = new Pool({
-    user: 'stackapp',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'madamtankoisbae',
-    port: 60404
-});
-
-export default dbConfig;
+export default db;

@@ -1,26 +1,30 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import Route from './mvc/routes/route';
-import dbConfig from './db/index';
+import db from './db/index';
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 
 app.get('/', (req, res) => {
     res.send('Andela Cycle 35 Bootcamp Project - Stackoverflow Lite');
 })
 
-const text = 'INSERT INTO user (userid, userfullname, useremail, userpassword) VALUES($1, $2, $3, $4) RETURNING *';
-const values = [1,'Daniel Lamarr', 'danielchidiebele@gmail.com', 'qwerty'];
+// db.connect((err, client, done) => {
+//   if (err) throw err
+//   client.query('INSERT INTO users (userfullname, useremail, userpassword) VALUES($1, $2, $3) RETURNING *', ['Priscilla Sam', 'priscin@gmail.com', 'asdfghh'], (err, res) => {
+//     done()
 
-dbConfig.query(text, values, (err, res) => {
-  if (err) {
-    console.log(err.stack)
-  } else {
-    console.log(res.rows[0])
-  }
-})
+//     if (err) {
+//       console.log('Bad');
+//       console.log(err.stack)
+//     } else {
+//       console.log('Success');
+//     }
+//   })
+// })
 
 Route(app);
 
