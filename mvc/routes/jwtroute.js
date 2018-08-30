@@ -17,6 +17,8 @@ const Route = (app) => {
 
     app.delete('/api/v1/questions/:id', tokendecode, Controller.deleteQuestion)
 
+    app.put('/api/v1/questions/:id/answers/:ans', tokendecode, Controller.updateAnswer);
+
 }
 
 export default Route;

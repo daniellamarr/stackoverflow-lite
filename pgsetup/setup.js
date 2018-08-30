@@ -24,6 +24,7 @@ CREATE TABLE answers (
     answersreply TEXT NOT NULL,
     answersquestion INT NOT NULL,
     answersuser INT NOT NULL,
+    answersqowner INT NOT NULL,
     answersdate TIMESTAMP DEFAULT Now()
 )`;
 
