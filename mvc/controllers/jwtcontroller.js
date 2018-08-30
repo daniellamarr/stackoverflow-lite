@@ -112,7 +112,7 @@ class Controller {
             }
                 db.connect((err_, client, done) => {
                     if (err_) throw err_
-                    client.query('INSERT INTO answers (answersreply, answersquestion, answersuser) VALUES($1, $2, $3) RETURNING *', [req.body.reply, req.params.id, req.userId], (err__, res__) => {
+                    client.query('INSERT INTO answers (answersreply, answersquestion, answersuser, answersqowner) VALUES($1, $2, $3, $4) RETURNING *', [req.body.reply, req.params.id, req.userId, '0'], (err__, res__) => {
                         done()
                     
                         if (err__) {
@@ -183,6 +183,59 @@ class Controller {
                                 resp.status(403).send({
                                     status: 'error',
                                     message: 'You are not authorized to delete this question'
+                                });
+                            }
+                        }
+                    })
+                })
+            })
+        })
+    }
+    updateAnswer = (req,resp,next) => {
+        db.connect((_err, client, done) => {
+            if (_err) throw _err
+            client.query('SELECT * FROM users WHERE userid = $1', [req.userId], (__err, __res) => {
+            done()
+            if (__err) resp.status(500).send({
+                status: 'error',
+                message: 'Internal sevrer error'
+            });
+            if (!__res) resp.status(404).send('You must be logged in to view questions');
+                db.connect((err_1, client, done) => {
+                    if (err_1) throw err_1
+                    client.query('SELECT * FROM answers WHERE answersid = $1 AND answersuser = $2', [req.params.ans, req.userId], (err__1, res__1) => {
+                        done()
+                        if (err__1){
+                            resp.status(500).send({
+                                status: 'error',
+                                message: 'Server could not retrieve answers'
+                            });
+                        }else{
+                            const [user] = res__1.rows;
+                            if (res__1.rows.length > 0){
+                                db.connect((err_, client, done) => {
+                                    if (err_) throw err_
+                                    client.query('UPDATE answers SET answersreply = $1 WHERE answersid = $2 AND answersuser = $3', [req.body.reply, req.params.ans, req.userId], (err__, res__) => {
+                                        done()
+                                    
+                                        if (err__) {
+                                            resp.status(500).send({
+                                                status: 'error',
+                                                message: 'Answer could not be updated'
+                                            });
+                                        } else {
+                                            resp.send({
+                                                status: 'success',
+                                                message:'Answer has been updated'
+                                            });
+                                            next();
+                                        }
+                                    })
+                                })
+                            }else{
+                                resp.status(403).send({
+                                    status: 'error',
+                                    message:'You are not authorized to update this question'
                                 });
                             }
                         }
