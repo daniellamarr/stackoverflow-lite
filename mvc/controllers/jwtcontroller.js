@@ -11,7 +11,10 @@ class Controller {
                 done()
             
                 if (err) {
-                    resp.status(404).send('Questions could not be found');
+                    resp.status(404).send({
+                        status: 'error',
+                        message: 'Questions could not be found'
+                    });
                 } else {
                     resp.send(res.rows);
                 }
@@ -25,7 +28,10 @@ class Controller {
                 done()
             
                 if (err) {
-                    resp.status(404).send('Question could not be found');
+                    resp.status(404).send({
+                        status: 'error',
+                        message: 'Question could not be found'
+                    });
                 } else {
                     resp.send(res.rows);
                 }
@@ -37,18 +43,40 @@ class Controller {
             if (_err) throw _err
             client.query('SELECT * FROM users WHERE userid = $1', [req.userId], (__err, __res) => {
             done()
-            if (__err) resp.status(500).send('Error on server');
-            if (!__res) resp.status(404).send('You must be logged in to ask a question');
+            if (__err) {
+                resp.status(500).send({
+                    status: 'error',
+                    message: 'Internal server error'
+                });
+                return;
+            }
+            if (!__res) {
+                resp.status(403).send({
+                    status: 'error',
+                    message: 'You need to be logged in to access this page'
+                });
+                return;
+            }
                 db.connect((err_, client, done) => {
                     if (err_) throw err_
                     client.query('INSERT INTO questions (questiontitle, questionbody, questionuser) VALUES($1, $2, $3) RETURNING *', [req.body.title, req.body.body, req.userId], (err__, res__) => {
                         done()
                     
                         if (err__) {
-                            resp.status(500).send('There was a server error');
+                            resp.status(500).send({
+                                status: 'error',
+                                message: 'Your account was not created'
+                            });
                         } else {
                             const [user] = __res.rows;
-                            resp.send(`User ${user.userfullname}, your question has been saved`);
+                            resp.send({
+                                status: 'success',
+                                message: 'Your question has been posted',
+                                data: {
+                                    title: req.body.title,
+                                    body: req.body.body
+                                }
+                            });
                             next();
                         }
                     })
@@ -57,26 +85,50 @@ class Controller {
         })
     }
     postAnswer = (req, resp, next) => {
-        if (!req.body.reply || req.body.reply.length < 3) {
-            resp.status(400).send('Please add a reply to this question');
+        if (!req.body.reply || req.body.reply.length < 1) {
+            resp.status(400).send({
+                status: 'error',
+                message: 'Answer field cannot be left empty'
+            });
             return;
         }
         db.connect((_err, client, done) => {
             if (_err) throw _err
             client.query('SELECT * FROM users WHERE userid = $1', [req.userId], (__err, __res) => {
             done()
-            if (__err) resp.status(500).send('Error on server');
-            if (!__res) resp.status(404).send('You must be logged in to ask a question');
+            if (__err) {
+                resp.status(500).send({
+                    status: 'error',
+                    message: 'Internal server error'
+                });
+                return;
+            }
+            if (!__res) {
+                resp.status(403).send({
+                    status: 'error',
+                    message: 'You need to be logged in to access this page'
+                });
+                return;
+            }
                 db.connect((err_, client, done) => {
                     if (err_) throw err_
                     client.query('INSERT INTO answers (answersreply, answersquestion, answersuser) VALUES($1, $2, $3) RETURNING *', [req.body.reply, req.params.id, req.userId], (err__, res__) => {
                         done()
                     
                         if (err__) {
-                            resp.status(500).send('There was an error posting answer');
+                            resp.status(500).send({
+                                status: 'error',
+                                message: 'Your answer was not saved'
+                            });
                         } else {
                             const [user] = __res.rows;
-                            resp.send(`User ${user.userfullname}, your reply has been saved`);
+                            resp.send({
+                                status: 'success',
+                                message: 'Your answer has been saved',
+                                data: {
+                                    reply: req.body.reply
+                                }
+                            });
                         }
                     })
                 })
@@ -85,15 +137,24 @@ class Controller {
     }
     userSignup = (req,resp) => {
         if (!req.body.userfullname || req.body.userfullname.length < 3) {
-            resp.status(400).send('Please enter your full name');
+            resp.status(400).send({
+                status: 'error',
+                message: 'Name field cannot be left empty'
+            });
             return;
         }
         if (!req.body.useremail || req.body.useremail.length < 3) {
-            resp.status(400).send('Please provide your email address');
+            resp.status(400).send({
+                status: 'error',
+                message: 'Email field cannot be left empty'
+            });
             return;
         }
         if (!req.body.userpassword || req.body.userpassword.length < 3) {
-            resp.status(400).send('Please provide your password');
+            resp.status(400).send({
+                status: 'error',
+                message: 'Password field cannot be left empty'
+            });
             return;
         }
         
@@ -105,29 +166,59 @@ class Controller {
                 done()
             
                 if (err) {
-                    resp.status(400).send('Sorry, your account was not created');
+                    resp.status(400).send({
+                        status: 'error',
+                        message: 'Account was not created'
+                    });
                 } else {
                     const [user] = res.rows;
                     const token = jwt.sign({ id: user.userid }, keyconfig, {
                         expiresIn: 86400
                     });
-                    resp.status(200).send({ auth: true, token: token });
-                    // resp.send(`${req.body.useremail}, your registration was successful`);
+                    resp.status(200).send({
+                        token: token,
+                        message: 'Account created',
+                        data: {
+                            userfullname: user.userfullname,
+                            useremail: user.useremail
+                        }
+                    });
                 }
             })
         })
     }
     userLogin = (req,resp) => {
+        if (!req.body.useremail || req.body.useremail.length < 3) {
+            resp.status(400).send({
+                status: 'error',
+                message: 'Email field cannot be left empty'
+            });
+            return;
+        }
+        if (!req.body.userpassword || req.body.userpassword.length < 3) {
+            resp.status(400).send({
+                status: 'error',
+                message: 'Password field cannot be left empty'
+            });
+            return;
+        }
         db.connect((err, client, done) => {
             if (err) throw err
-            // const email = req.body.useremail;
             client.query('SELECT * FROM users WHERE useremail = $1', [req.body.useremail], (err, res) => {
                 done()
             
-                if (err)  resp.status(500).send('There was an error on the server');
+                if (err) {
+                    resp.status(500).send({
+                        status: 'error',
+                        message: 'Internal server error'
+                    });
+                }
                 
                 if (res.rows.length < 1) {
-                    resp.status(404).send('This email does not exist');
+                    resp.status(404).send({
+                        status: 'error',
+                        message: 'Email does not exist'
+                    });
                 }else{
                     const [user] = res.rows;
                     const password = bcrypt.compareSync(req.body.userpassword, user.userpassword);
@@ -136,7 +227,14 @@ class Controller {
                     const token = jwt.sign({ id: user.userid }, keyconfig, {
                         expiresIn: 86400
                     });
-                    resp.status(200).send({ auth: true, token: token });
+                    resp.status(200).send({
+                        token: token,
+                        message: 'You are logged in',
+                        data: {
+                            userfullname: user.userfullname,
+                            useremail: user.useremail
+                        }
+                    });
                 }
             })
         })
