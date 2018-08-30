@@ -15,6 +15,8 @@ const Route = (app) => {
 
     app.post('/api/v1/auth/login', Controller.userLogin);
 
+    app.delete('/api/v1/questions/:id', tokendecode, Controller.deleteQuestion)
+
 }
 
 export default Route;
