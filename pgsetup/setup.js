@@ -5,7 +5,8 @@ CREATE TABLE users (
     userid serial PRIMARY KEY NOT NULL,
     userfullname VARCHAR(50) NOT NULL,
     useremail VARCHAR(50) NOT NULL,
-    userpassword VARCHAR(100) NOT NULL
+    userpassword VARCHAR(100) NOT NULL,
+    userdate TIMESTAMP DEFAULT Now()
 )`;
 
 const createQuestions = `
@@ -14,7 +15,7 @@ CREATE TABLE questions (
     questiontitle VARCHAR(100) NOT NULL,
     questionbody TEXT NOT NULL,
     questionuser INT NOT NULL,
-    questiondate TIMESTAMP NOT NULL
+    questiondate TIMESTAMP DEFAULT Now()
 )`;
 
 const createAnswers = `
@@ -23,7 +24,7 @@ CREATE TABLE answers (
     answersreply TEXT NOT NULL,
     answersquestion INT NOT NULL,
     answersuser INT NOT NULL,
-    answersdate TIMESTAMP NOT NULL
+    answersdate TIMESTAMP DEFAULT Now()
 )`;
 
 db.connect((err, client, done) => {
