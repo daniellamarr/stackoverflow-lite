@@ -140,14 +140,23 @@ class Controller {
             if (_err) throw _err
             client.query('SELECT * FROM users WHERE userid = $1', [req.userId], (__err, __res) => {
             done()
-            if (__err) resp.status(500).send('Error on server');
-            if (!__res) resp.status(404).send('You must be logged in to view questions');
+            if (__err) resp.status(500).send({
+                status: 'error',
+                message: 'Internal server error'
+            });
+            if (!__res) resp.status(403).send({
+                status: 'error',
+                message: 'You must be logged in to acces this page'
+            });
                 db.connect((err_1, client, done) => {
                     if (err_1) throw err_1
                     client.query('SELECT * FROM questions WHERE questionid = $1 AND questionuser = $2', [req.params.id, req.userId], (err__1, res__1) => {
                         done()
                         if (err__1){
-                            resp.status(500).send('There was a server error');
+                            resp.status(404).send({
+                                status: 'error',
+                                message: 'Question was not found on the server'
+                            });
                         }else{
                             const [user] = res__1.rows;
                             if (res__1.rows.length > 0){
@@ -157,15 +166,24 @@ class Controller {
                                         done()
                                     
                                         if (err__) {
-                                            resp.status(500).send('There was a server error');
+                                            resp.status(500).send({
+                                                status: 'error',
+                                                message: 'Unable to delete this question'
+                                            });
                                         } else {
-                                            resp.send(`Question has been deleted`);
+                                            resp.send({
+                                                status: 'success',
+                                                message: 'Question has been deleted'
+                                            });
                                             next();
                                         }
                                     })
                                 })
                             }else{
-                                resp.status(403).send('You are not authorized to delete this question');
+                                resp.status(403).send({
+                                    status: 'error',
+                                    message: 'You are not authorized to delete this question'
+                                });
                             }
                         }
                     })
