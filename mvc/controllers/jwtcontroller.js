@@ -196,14 +196,20 @@ class Controller {
             if (_err) throw _err
             client.query('SELECT * FROM users WHERE userid = $1', [req.userId], (__err, __res) => {
             done()
-            if (__err) resp.status(500).send('Error on server');
+            if (__err) resp.status(500).send({
+                status: 'error',
+                message: 'Internal sevrer error'
+            });
             if (!__res) resp.status(404).send('You must be logged in to view questions');
                 db.connect((err_1, client, done) => {
                     if (err_1) throw err_1
                     client.query('SELECT * FROM answers WHERE answersid = $1 AND answersuser = $2', [req.params.ans, req.userId], (err__1, res__1) => {
                         done()
                         if (err__1){
-                            resp.status(500).send('There was a server error');
+                            resp.status(500).send({
+                                status: 'error',
+                                message: 'Server could not retrieve answers'
+                            });
                         }else{
                             const [user] = res__1.rows;
                             if (res__1.rows.length > 0){
@@ -213,15 +219,24 @@ class Controller {
                                         done()
                                     
                                         if (err__) {
-                                            resp.status(500).send('There was a server error');
+                                            resp.status(500).send({
+                                                status: 'error',
+                                                message: 'Answer could not be updated'
+                                            });
                                         } else {
-                                            resp.send(`Question has been updated`);
+                                            resp.send({
+                                                status: 'success',
+                                                message:'Answer has been updated'
+                                            });
                                             next();
                                         }
                                     })
                                 })
                             }else{
-                                resp.status(403).send('You are not authorized to update this question');
+                                resp.status(403).send({
+                                    status: 'error',
+                                    message:'You are not authorized to update this question'
+                                });
                             }
                         }
                     })
