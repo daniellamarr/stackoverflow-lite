@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./index.js --exec babel-node --preset-es2015",
-    "test": "npm run dbdrop & npm run dbcreate & mocha --require babel-core/register",
+    "start": "npm run dbdrop & npm run dbcreate & babel-node ./index.js --exec babel-node --preset-es2015",
+    "test": "mocha --require babel-core/register",
     "dbcreate": "babel-node ./pgsetup/setup.js",
     "dbdrop": "babel-node ./pgsetup/remove.js"
   },
