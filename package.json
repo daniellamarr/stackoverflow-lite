@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node ./index.js --exec babel-node --preset-es2015",
     "test": "cross-env NODE_ENV=test nyc mocha --require babel-core/register",
-    "pretest": "SET \"NODE_ENV=test\" && npm run migrate",
+    "pretest": "npm run migrate",
     "migrate": "npm run dbdrop & npm run dbcreate",
     "dbcreate": "babel-node ./pgsetup/setup.js",
     "dbdrop": "babel-node ./pgsetup/remove.js",
