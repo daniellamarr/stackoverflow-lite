@@ -1,9 +1,16 @@
 language: node_js
 node_js:
  - "stable"
+addons:
+    code_climate:
+        repo_token: 365393c0554182975b4ebaa4d32a520686ff0c462b95f031acb7d67f92f38c00
 cache:
   directories:
     - "node_modules"
+before_script:
+  - psql -c 'create database testdb;' -U postgres
 script:
   - npm test
+after_script:
   - npm run coverage
+  - codeclimate-test-reporter < ./coverage/lcov.info
