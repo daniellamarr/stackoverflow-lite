@@ -8,7 +8,7 @@ cache:
   directories:
     - "node_modules"
 before_script:
-  - psql -c 'create database testdb;' -U postgres
+  - psql -c 'create database travis;' -U postgres
 script:
   - npm test
 after_script:

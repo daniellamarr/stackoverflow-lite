@@ -70,6 +70,13 @@ const queries = {
             values: [answer,user]
         }
     },
+    questionAnswer (question) {
+        return {
+            text: `SELECT * FROM answers
+            WHERE answersquestion = $1`,
+            values: [question]
+        }
+    },
     updateAnswer (reply,answer,user) {
         return {
             text: `UPDATE answers 

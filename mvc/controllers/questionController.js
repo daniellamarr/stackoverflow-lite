@@ -65,11 +65,33 @@ class questionController {
                             message: `Returned no question(s)`
                         });
                     }else{
-                        resp.send({
-                            status: 'success',
-                            message: `Returned ${res.rows.length} question(s)`,
-                            data: res.rows
-                        });
+                        db.connect((err, client, done) => {
+                        if (err) throw err
+                        client.query(queries.questionAnswer(
+                            req.params.id
+                        ), (err_, res_) => {
+                            if (err_) {
+                                resp.status(500).send({
+                                    status: 'error',
+                                    message: 'A server error occured'
+                                })
+                                return;
+                            }
+                            let ans;
+                            if (res_.rows.length > 0) {
+                                ans = res_.rows;
+                            }else{
+                                ans = null
+                            }
+                            done()
+                                resp.send({
+                                    status: 'success',
+                                    message: `Returned ${res.rows.length} question(s)`,
+                                    question: res.rows,
+                                    answers: ans
+                                });
+                            })
+                        })
                     }
                 }
             })

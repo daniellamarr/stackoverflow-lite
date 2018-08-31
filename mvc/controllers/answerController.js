@@ -105,9 +105,9 @@ class answerController {
                                 db.connect((err_, client, done) => {
                                     if (err_) throw err_
                                     client.query(queries.updateAnswer(
-                                        [req.body.reply,
+                                        req.body.reply,
                                         req.params.ans,
-                                        req.userId]
+                                        req.userId
                                     ), (err__, res__) => {
                                         done()
                                     
